@@ -10,7 +10,7 @@ export const create_user = async (req, res) => {
         res.cookie('userId', user._id.toString(), {
             httpOnly: true,
             secure: true,
-            sameSite: 'lax',
+            sameSite: 'none',
             maxAge: 60 * 60 * 1000 * 24 // 1 day
         });
         res.status(201).json({
@@ -99,7 +99,7 @@ export const login_user = async (req, res) => {
         res.cookie('userId', user._id.toString(), {
             httpOnly: true,
             secure: true,
-            sameSite: 'lax',
+            sameSite: 'none',
             maxAge: 60 * 60 * 1000 * 24 // 1 day
         });
         res.json({

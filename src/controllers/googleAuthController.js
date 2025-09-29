@@ -16,7 +16,7 @@ const getGoogleAuthorization = (type) => {
   const cookieConfig = {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: 'none',
     maxAge: 60 * 60 * 1000 * 24 // 1 day
   };
   
@@ -125,7 +125,7 @@ export const handleAdminGoogleCallback = async (req, res) => {
     res.cookie('adminId', admin._id.toString(), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'none',
       maxAge: 60 * 60 * 1000 * 24 * 7 // 1 week
     });
 
@@ -194,7 +194,7 @@ export const handleUserGoogleCallback = async (req, res) => {
     res.cookie('userId', user._id.toString(), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'none',
       maxAge: 60 * 60 * 1000 * 24 * 7 // 1 week
     });
 

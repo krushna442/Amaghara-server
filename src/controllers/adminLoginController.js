@@ -20,7 +20,7 @@ export const getGoogleLoginPage= async (req, res) => {
     const cookieconfig = {
         httpOnly: true,
         secure :true,
-        sameSite: 'lax',
+        sameSite: 'none',
         maxAge: 60 * 60 * 1000 *24
     };
     res.cookie("google_oauth_state",state, cookieconfig); // Set the state in a secure cookie
@@ -74,7 +74,7 @@ export const handleGoogleCallback = async (req, res) => {
                 res.cookie(role === 'admin' ? 'adminId' : 'userId', record._id.toString(), {
                     httpOnly: true,
                     secure: true,
-                    sameSite: 'lax',
+                    sameSite: 'none',
                     maxAge: 60 * 60 * 1000 * 24 // 1 day
                 });
                 return res.json({
@@ -128,7 +128,7 @@ export const handleGoogleCallback = async (req, res) => {
             res.cookie(role === 'admin' ? 'adminId' : 'userId', newRecord._id.toString(), {
                 httpOnly: true,
                 secure: true,
-                sameSite: 'lax',
+                sameSite: 'none',
                 maxAge: 60 * 60 * 1000 * 24 // 1 day
             });
             return res.json({
@@ -238,7 +238,7 @@ export const admin_login = async (req, res) => {
         res.cookie('adminId', admin._id.toString(), {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
+            sameSite: 'none',
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         });
         
