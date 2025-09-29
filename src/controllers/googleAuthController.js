@@ -230,5 +230,6 @@ export const userLogout = (req, res) => {
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       path: '/'
-    });  res.redirect(`${process.env.FRONTEND_URL}/login`);
+    }); 
+     res.redirect(`${process.env.FRONTEND_URL}/login`);
 };
