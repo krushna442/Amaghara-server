@@ -26,7 +26,7 @@ console.log('Environment:', NODE_ENV);
 export const google = new Google(
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
-  null // No default redirect URI - we'll specify it in each method call
+  null 
 );
 
 // Helper function to get redirect URI based on type

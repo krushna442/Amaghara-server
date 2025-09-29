@@ -80,3 +80,17 @@ export const verifyOTPFromSession = (req, email, otp, purpose) => {
   delete req.session.otpData;
   return { success: true, message: "OTP verified" };
 };
+
+// Email transporter configuration
+export const createEmailTransporter = () => {
+  return createTransport({
+    service: "gmail",
+    pool: true,
+    maxConnections: 5,
+    maxMessages: 100,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASSWORD,
+    },
+  });
+};

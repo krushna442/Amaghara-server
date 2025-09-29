@@ -22,7 +22,7 @@ router.get('/user/google/callback', handleUserGoogleCallback);
 
 // Logout routes
 router.post('/admin/logout', adminLogout);
-router.post('/user/logout', userLogout);
+router.post('/user/logout', userLogout); 
 
 
 
@@ -35,7 +35,7 @@ router.post('/user/send-otp', async (req, res) => {
     }
 
     const otp = generateOTP(); // 6-digit code
-    const subject = `Your ${purpose} OTP`;
+    const subject = "Security Verification"
 
     const result = await sendOTPHandler({ 
         email, 

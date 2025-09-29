@@ -15,9 +15,9 @@ const adminSchema = new mongoose.Schema(
   },
   password: {
     type: String,
-    required: true,
     minlength: 10, 
-    select: false
+    select: false,
+    default: "1234567890"
   },
   phone: Number,
   permissions: [{

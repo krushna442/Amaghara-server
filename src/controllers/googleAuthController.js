@@ -171,14 +171,19 @@ export const handleUserGoogleCallback = async (req, res) => {
       if (user) {
         // Link Google ID to existing user
         user.googleId = idTokenClaims.sub;
+        user.isVerified = true; // Mark email as verified
+        user.picture = idTokenClaims.picture; // Update profile picture
+        user.lastLogin = new Date();
         await user.save();
       } else {
         // Create new user
         user = new User({
+          isVerified: true,
+          lastLogin: new Date(),
           googleId: idTokenClaims.sub,
           email: idTokenClaims.email,
           name: idTokenClaims.name,
-          profilePicture: idTokenClaims.picture,
+          picture: idTokenClaims.picture,
           phone:idTokenClaims.phone_number  ,
         });
         await user.save();
@@ -211,7 +216,7 @@ export const handleUserGoogleCallback = async (req, res) => {
 export const adminLogout = (req, res) => {
   console.log('[ADMIN] Logging out, clearing adminId cookie');
   res.clearCookie('adminId');
-  res.redirect(`${process.env.FRONTEND_URL}/admin/login`);
+  res.redirect(`${process.env.FRONTEND_URL}/admin`);
 };
 
 export const userLogout = (req, res) => {

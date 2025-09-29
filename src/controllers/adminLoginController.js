@@ -154,6 +154,8 @@ export const handleGoogleCallback = async (req, res) => {
 export const adminLogout = (req, res) => {
     res.clearCookie('google_oauth_state');
     res.clearCookie('google_oauth_code_verifier');
+    res.clearCookie('adminId');
+    
     // If you set any session or auth cookies, clear them here as well
     res.json({
         success: true,
@@ -208,30 +210,51 @@ export const admin_verify_otp = async (req, res) => {
 // Admin login with email and password
 export const admin_login = async (req, res) => {
     const { email, password } = req.body;
+    
     if (!email || !password) {
         return res.status(400).json({ success: false, message: "Email and password are required" });
     }
+    
     try {
         const admin = await Admin.findOne({ email }).select('+password');
+        
         if (!admin) {
             return res.status(401).json({ success: false, message: "Invalid email or password" });
         }
-        const isMatch = await bcrypt.compare(password, admin.password);
-        if (!isMatch) {
+        
+        // Check if admin.password exists before calling trim
+        if (!admin.password) {
+            return res.status(401).json({ success: false, message: "Invalid password" });
+        }
+        
+        // Trim and compare passwords
+        const trimmedInputPassword = password.trim();
+        const trimmedStoredPassword = admin.password.trim();
+        
+        if (trimmedStoredPassword !== trimmedInputPassword) {
             return res.status(401).json({ success: false, message: "Invalid email or password" });
         }
+        
         res.cookie('adminId', admin._id.toString(), {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
-            maxAge: 60 * 60 * 1000 * 24 // 1 day
+            maxAge: 24 * 60 * 60 * 1000 // 1 day
         });
+        
         res.json({
             success: true,
             message: "Admin login successful",
-            admin
+            admin: {
+                _id: admin._id,
+                name: admin.name,
+                email: admin.email,
+                role: admin.role
+            }
         });
+        
     } catch (error) {
+        console.log("Error during admin login:", error);
         res.status(500).json({
             success: false,
             message: "Error logging in",

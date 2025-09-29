@@ -1,5 +1,5 @@
 import express from 'express';
-import { admin_send_otp, admin_verify_otp, admin_login } from '../controllers/adminLoginController.js';
+import { admin_send_otp, admin_verify_otp, admin_login, adminLogout } from '../controllers/adminLoginController.js';
 import { adminAuth } from '../../auth/adminAuth.js';
 import User from '../models/user.js'
 const router = express.Router();
@@ -12,6 +12,8 @@ router.post('/verify-otp', admin_verify_otp);
 
 // Admin login (email/password)
 router.post('/login', admin_login); 
+router.post('/logout', adminLogout); 
+
 
 router.get ('/home', adminAuth, (req, res) => {
     res.status(200).json({ success: true, message: 'Welcome to the admin home page', admin: req.admin } );

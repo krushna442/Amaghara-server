@@ -1,6 +1,6 @@
 import express from 'express';
 import { adminAuth } from '../../auth/adminAuth.js';
-import { create_property, update_property ,delete_property } from '../controllers/propertycontroller.js';
+import { create_property, update_property ,delete_property, getSimilarProperties } from '../controllers/propertycontroller.js';
 const router = express.Router();
 import Property from '../models/property.js';
 
@@ -23,6 +23,10 @@ router.get('/property', async (req, res) => {
         });
     }
 });
+
+//similar prioperty route for getting property by id
+router.get('/similar/:id',getSimilarProperties);
+
 router.put('/property/:id', adminAuth, update_property);
 router.delete('/property/:id', adminAuth, delete_property);
 router.get('/property/:id', async (req, res) => {
