@@ -215,12 +215,20 @@ export const handleUserGoogleCallback = async (req, res) => {
 // Logout functions
 export const adminLogout = (req, res) => {
   console.log('[ADMIN] Logging out, clearing adminId cookie');
-  res.clearCookie('adminId');
-  res.redirect(`${process.env.FRONTEND_URL}/admin`);
+    res.clearCookie('adminId', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      path: '/'
+    });  res.redirect(`${process.env.FRONTEND_URL}/admin`);
 };
 
 export const userLogout = (req, res) => {
   console.log('[USER] Logging out, clearing userId cookie');
-  res.clearCookie('userId');
-  res.redirect(`${process.env.FRONTEND_URL}/login`);
+    res.clearCookie('userId', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      path: '/'
+    });  res.redirect(`${process.env.FRONTEND_URL}/login`);
 };
