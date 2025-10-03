@@ -10,6 +10,6 @@ router.post("/contact-agent", sendPropertyInquiry);
 // Get all messages
 router.get("/messages", getMessages);
 // Delete message by ID
-router.delete("/messages:id", deleteMessage);
+router.delete("/messages/:id", deleteMessage);
 
 export default router;
