@@ -20,8 +20,9 @@ console.log('Google OAuth Config:');
 console.log('Client ID:', GOOGLE_CLIENT_ID);
 console.log('Backend URL:', BACKEND_URL);
 console.log('Environment:', NODE_ENV);
-console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
 
+// Create the main Google OAuth instance WITHOUT a default redirect URI
+// This allows us to specify different redirect URIs dynamically
 export const google = new Google(
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,

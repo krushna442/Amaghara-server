@@ -21,8 +21,13 @@ const UserSchema = new Schema(
   },
   phone: {
     type: String,
+   default: null, // Allow null values
     validate: {
-      validator: (v) => /^[0-9]{10,15}$/.test(v),
+      validator: function(v) {
+        // Only validate if phone is provided and not empty
+        if (!v || v === '') return true; // Allow empty/null
+        return /^[0-9]{10,15}$/.test(v);
+      },
       message: "Invalid phone number"
     }
   },
