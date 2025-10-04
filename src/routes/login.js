@@ -18,7 +18,7 @@ router.get('/admin/google/callback', handleAdminGoogleCallback);
 
 // User Google OAuth routes
 router.get('/user/google', getUserGoogleLogin);
-router.get('/user/google/callback', handleUserGoogleCallback);
+router.get('/user/google/callback/:url', handleUserGoogleCallback);
 
 // Logout routes
 router.post('/admin/logout', adminLogout);
